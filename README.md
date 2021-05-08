@@ -202,4 +202,100 @@ class MyStack{
 	}
 }
 
+Q.3.(232).Implement a first in first out (FIFO) queue using only two stacks. The implemented queue should support all the functions of a normal queue (push, peek, pop, and empty).
+Implement the MyQueue class:
+void push(int x) Pushes element x to the back of the queue.
+int pop() Removes the element from the front of the queue and returns it.
+int peek() Returns the element at the front of the queue.
+boolean empty() Returns true if the queue is empty, false otherwise.
+
+Input
+["MyQueue", "push", "push", "peek", "pop", "empty"]
+[[], [1], [2], [], [], []]
+Output
+[null, null, null, 1, 1, false]
+Explanation
+MyQueue myQueue = new MyQueue();
+myQueue.push(1); // queue is: [1]
+myQueue.push(2); // queue is: [1, 2] (leftmost is front of the queue)
+myQueue.peek(); // return 1
+myQueue.pop(); // return 1, queue is [2]
+myQueue.empty(); // return false
+
+class MyQueue {
+    Stack<Integer> s1=new Stack<>();
+    Stack<Integer> s2=new Stack<>();
+int c;
+    /** Initialize your data structure here. */
+    public MyQueue() {
+        this.c=0;
+    }
+    
+    /** Push element x to the back of queue. */
+    public void push(int x) {
+        s1.add(x);
+        c++;
+        
+       
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    public int pop() {
+        int c1=c;
+        while(c1>1)
+        {
+            s2.add(s1.pop());                             //In s2 element will be stored in reverse order ,but last element will not be stored 
+            c1--;
+        }
+        c--;
+        int k=s1.pop();                                 //returning first element if we foloow queue data structure
+        int c2=0;
+        while(c2<c)
+        {
+            s1.add(s2.pop());                            //Restoring all element of s2 in in same order as that of s1 previously but missing one element that is popped out
+            c2++;
+        }
+        return k;
+        
+        
+    }
+    
+    /** Get the front element. */
+    public int peek() {
+         int c1=c;
+        while(c1>1)
+        {
+            s2.add(s1.pop());
+            c1--;
+        }
+        int k=s1.peek();                                          //returning first eleent entered in stack that is first element to be popped out if we follow queue data                                                                            structure
+        int c2=1;
+        while(c2<c)
+        {
+            s1.add(s2.pop());
+            c2++;
+        }
+        return k;
+        
+    }
+    
+    /** Returns whether the queue is empty. */
+    public boolean empty() {
+        if(c==0)
+            return true;
+        else
+            return false;
+    }
+}
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue obj = new MyQueue();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.peek();
+ * boolean param_4 = obj.empty();
+ */
+
+
 
